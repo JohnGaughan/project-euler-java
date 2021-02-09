@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
+import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -47,7 +48,7 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0013
 implements ISolver {
 
-  private static final Path INPUT = Path.of("input-problem-0013.txt");
+  private static final Path INPUT = InputPath.of("input-problem-0013.txt");
 
   @Override
   public long getExpectedResult() {

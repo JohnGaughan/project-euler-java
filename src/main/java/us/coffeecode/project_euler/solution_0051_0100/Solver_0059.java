@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
+import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -53,7 +54,7 @@ implements ISolver {
 
   private static final Pattern SEPARATOR = Pattern.compile(",");
 
-  private final Path INPUT = Path.of("input-problem-0059.txt");
+  private static final Path INPUT = InputPath.of("input-problem-0059.txt");
 
   @Override
   public long getExpectedResult() {
@@ -74,7 +75,6 @@ implements ISolver {
     for (int character : plaintext) {
       sum += character;
     }
-    System.out.println(new String(plaintext));
     return sum;
   }
 
