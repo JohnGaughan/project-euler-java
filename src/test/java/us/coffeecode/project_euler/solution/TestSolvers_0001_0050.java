@@ -16,22 +16,13 @@
  */
 package us.coffeecode.project_euler.solution;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 
-import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.InjectionConfiguration;
 import us.coffeecode.project_euler.solution_0001_0050.*;
-import us.coffeecode.project_euler.solution_0051_0100.*;
 
 /**
  * <p>
- * Test harness that validates all problem solutions.
+ * Test harness that validates problem solutions 1-50.
  * </p>
  * <p>
  * Copyright (c) 2021 John Gaughan
@@ -39,27 +30,8 @@ import us.coffeecode.project_euler.solution_0051_0100.*;
  *
  * @author John Gaughan &lt;john@coffeecode.us&gt;
  */
-public final class SolverValidations {
-
-  private static ConfigurableApplicationContext context;
-
-  @BeforeClass
-  public static void before() {
-    context = new AnnotationConfigApplicationContext(InjectionConfiguration.class);
-  }
-
-  @AfterClass
-  public static void after() {
-    context.close();
-  }
-
-  private void test(final Class<? extends ISolver> impl) throws Exception {
-    final String problem = impl.getAnnotation(Component.class).value();
-    final ISolver solver = context.getBean(impl);
-    final long expected = solver.getExpectedResult();
-    final long actual = solver.getActualResult();
-    Assert.assertEquals("Incorrect result for problem " + problem, expected, actual);
-  }
+public final class TestSolvers_0001_0050
+extends AbstractTestSolvers {
 
   @Test
   public void testSolver0001() throws Exception {
@@ -309,91 +281,6 @@ public final class SolverValidations {
   @Test
   public void testSolver0050() throws Exception {
     test(Solver_0050.class);
-  }
-
-  @Test
-  public void testSolver0051() throws Exception {
-    test(Solver_0051.class);
-  }
-
-  @Test
-  public void testSolver0052() throws Exception {
-    test(Solver_0052.class);
-  }
-
-  @Test
-  public void testSolver0053() throws Exception {
-    test(Solver_0053.class);
-  }
-
-  @Test
-  public void testSolver0054() throws Exception {
-    test(Solver_0054.class);
-  }
-
-  @Test
-  public void testSolver0055() throws Exception {
-    test(Solver_0055.class);
-  }
-
-  @Test
-  public void testSolver0056() throws Exception {
-    test(Solver_0056.class);
-  }
-
-  @Test
-  public void testSolver0057() throws Exception {
-    test(Solver_0057.class);
-  }
-
-  @Test
-  public void testSolver0058() throws Exception {
-    test(Solver_0058.class);
-  }
-
-  @Test
-  public void testSolver0059() throws Exception {
-    test(Solver_0059.class);
-  }
-
-  @Test
-  public void testSolver0060() throws Exception {
-    test(Solver_0060.class);
-  }
-
-  @Test
-  public void testSolver0061() throws Exception {
-    test(Solver_0061.class);
-  }
-
-  @Test
-  public void testSolver0062() throws Exception {
-    test(Solver_0062.class);
-  }
-
-  @Test
-  public void testSolver0063() throws Exception {
-    test(Solver_0063.class);
-  }
-
-  @Test
-  public void testSolver0064() throws Exception {
-    test(Solver_0064.class);
-  }
-
-  @Test
-  public void testSolver0065() throws Exception {
-    test(Solver_0065.class);
-  }
-
-  @Test
-  public void testSolver0066() throws Exception {
-    test(Solver_0066.class);
-  }
-
-  @Test
-  public void testSolver0067() throws Exception {
-    test(Solver_0067.class);
   }
 
 }
