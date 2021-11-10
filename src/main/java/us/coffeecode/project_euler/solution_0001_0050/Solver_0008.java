@@ -18,12 +18,10 @@ package us.coffeecode.project_euler.solution_0001_0050;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -46,8 +44,6 @@ public class Solver_0008
 implements ISolver {
 
   private static final int LENGTH = 13;
-
-  private static final Path INPUT = InputPath.of("input-problem-0008.txt");
 
   @Override
   public long getExpectedResult() {
@@ -74,7 +70,7 @@ implements ISolver {
 
   private long[] getInput() {
     try {
-      return Files.readAllLines(INPUT).stream().mapToLong(Long::parseLong).toArray();
+      return Files.readAllLines(getInputPath()).stream().mapToLong(Long::parseLong).toArray();
     }
     catch (IOException ex) {
       throw new RuntimeException(ex);

@@ -16,6 +16,9 @@
  */
 package us.coffeecode.project_euler.solution_0001_0050;
 
+import java.util.stream.IntStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
@@ -55,15 +58,8 @@ import us.coffeecode.project_euler.common.Pandigital;
 public class Solver_0038
 implements ISolver {
 
-  private static final int LOWER_BOUND = 9_123;
-
-  private static final int UPPER_BOUND = 9_876;
-
-  private final Pandigital pandigital;
-
-  public Solver_0038(final Pandigital pandigit) {
-    pandigital = pandigit;
-  }
+  @Autowired
+  private Pandigital pandigital;
 
   @Override
   public long getExpectedResult() {
@@ -72,13 +68,8 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    for (int base = UPPER_BOUND; base >= LOWER_BOUND; --base) {
-      int candidate = base * 100_000 + 2 * base;
-      if (pandigital.is(candidate)) {
-        return candidate;
-      }
-    }
-    return -1;
+    return IntStream.iterate(9_876, (i -> i >= 9_123), (i -> i - 1)).map(i -> (i * 100_000) + (i << 1)).filter(
+      pandigital).findFirst().getAsInt();
   }
 
 }

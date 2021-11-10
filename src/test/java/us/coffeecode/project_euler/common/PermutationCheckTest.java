@@ -16,8 +16,8 @@
  */
 package us.coffeecode.project_euler.common;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -33,32 +33,32 @@ public final class PermutationCheckTest {
 
   @Test
   public void test1() {
-    final boolean actual = new PermutationCheck().check(0, 1);
-    Assert.assertFalse(actual);
+    final boolean actual = new PermutationCheck().test(0, 1);
+    Assertions.assertFalse(actual);
   }
 
   @Test
   public void test2() {
-    final boolean actual = new PermutationCheck().check(12, 21);
-    Assert.assertTrue(actual);
+    final boolean actual = new PermutationCheck().test(12, 21);
+    Assertions.assertTrue(actual);
   }
 
   @Test
   public void test3() {
-    final boolean actual = new PermutationCheck().check(12, 12);
-    Assert.assertTrue(actual);
+    final boolean actual = new PermutationCheck().test(12, 12);
+    Assertions.assertTrue(actual);
   }
 
   @Test
   public void test4() {
-    final boolean actual = new PermutationCheck().check(10, 100);
-    Assert.assertFalse(actual);
+    final boolean actual = new PermutationCheck().test(10, 100);
+    Assertions.assertFalse(actual);
   }
 
   @Test
   public void test5() {
-    final boolean actual = new PermutationCheck().check(65, 56);
-    Assert.assertTrue(actual);
+    final boolean actual = new PermutationCheck().test(65, 56);
+    Assertions.assertTrue(actual);
   }
 
 }

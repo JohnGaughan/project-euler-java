@@ -18,14 +18,12 @@ package us.coffeecode.project_euler.solution_0051_0100;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -65,8 +63,6 @@ import us.coffeecode.project_euler.common.InputPath;
 public class Solver_0054
 implements ISolver {
 
-  private static final Path INPUT = InputPath.of("input-problem-0054.txt");
-
   private static final Pattern SEPARATOR = Pattern.compile(" ");
 
   private static final int RANK = 0;
@@ -80,13 +76,8 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    int player1wins = 0;
-    for (final long[] hands : getInput()) {
-      if (hands[0] > hands[1]) {
-        ++player1wins;
-      }
-    }
-    return player1wins;
+    // Remove hands where player 1 does not win, and count the rest.
+    return Arrays.stream(getInput()).filter(a -> a[0] > a[1]).count();
   }
 
   /**
@@ -95,7 +86,7 @@ implements ISolver {
    */
   private long[][] getInput() {
     try {
-      return Files.readAllLines(INPUT).stream().map(s -> convert(SEPARATOR.split(s))).map(this::score).toArray(
+      return Files.readAllLines(getInputPath()).stream().map(s -> convert(SEPARATOR.split(s))).map(this::score).toArray(
         long[][]::new);
     }
     catch (IOException ex) {
@@ -145,7 +136,8 @@ implements ISolver {
       }
 
       // Sort the cards, low to high.
-      Arrays.sort(result[hand], (card1, card2) -> card2[RANK] < card1[RANK] ? 1 : (card2[RANK] > card1[RANK] ? -1 : 0));
+      Arrays.sort(result[hand],
+        (card1, card2) -> (card2[RANK] < card1[RANK]) ? 1 : ((card2[RANK] > card1[RANK]) ? -1 : 0));
     }
     return result;
   }
@@ -206,49 +198,49 @@ implements ISolver {
 
       // Bits 0-19 are the card ranks, low to high. This way in the case of a tie, it breaks automatically.
       scores[hand] |= hands[hand][0][RANK];
-      scores[hand] |= hands[hand][1][RANK] << 4;
-      scores[hand] |= hands[hand][2][RANK] << 8;
-      scores[hand] |= hands[hand][3][RANK] << 12;
-      scores[hand] |= hands[hand][4][RANK] << 16;
+      scores[hand] |= (hands[hand][1][RANK] << 4);
+      scores[hand] |= (hands[hand][2][RANK] << 8);
+      scores[hand] |= (hands[hand][3][RANK] << 12);
+      scores[hand] |= (hands[hand][4][RANK] << 16);
 
       // Bits 20-23 are the rank of the single pair.
       if (lowPair > -1) {
-        scores[hand] |= lowPair << 20;
+        scores[hand] |= (lowPair << 20);
       }
 
       // Bits 24-27 are the rank of the higher second pair.
       if (highPair > -1) {
-        scores[hand] |= highPair << 24;
+        scores[hand] |= (highPair << 24);
       }
 
       // Bits 28-31 are the rank of the three of a kind.
-      if (threeOfAKind > -1 && lowPair < 0) {
-        scores[hand] |= threeOfAKind << 28;
+      if ((threeOfAKind > -1) && (lowPair < 0)) {
+        scores[hand] |= (threeOfAKind << 28);
       }
 
       // Bits 32-35 are the value of the high card in a straight.
       if (straight) {
-        scores[hand] |= hands[hand][4][RANK] << 32;
+        scores[hand] |= (hands[hand][4][RANK] << 32);
       }
 
       // Bit 36 is set if there is a flush.
       if (flush) {
-        scores[hand] |= 1 << 36;
+        scores[hand] |= (1 << 36);
       }
 
       // Bits 37-40 are the value of the three of a kind in a full house. Its pair is in 20-23 (already set).
-      if (threeOfAKind > -1 && lowPair > -1) {
-        scores[hand] |= threeOfAKind << 37;
+      if ((threeOfAKind > -1) && (lowPair > -1)) {
+        scores[hand] |= (threeOfAKind << 37);
       }
 
       // Bits 41-44 are the rank of the four of a kind.
       if (fourOfAKind > -1) {
-        scores[hand] |= fourOfAKind << 41;
+        scores[hand] |= (fourOfAKind << 41);
       }
 
       // Bits 45-48 are the value of the high card in the straight flush (including royal).
       if (straight && flush) {
-        scores[hand] |= hands[hand][4][RANK] << 45;
+        scores[hand] |= (hands[hand][4][RANK] << 45);
       }
     }
 

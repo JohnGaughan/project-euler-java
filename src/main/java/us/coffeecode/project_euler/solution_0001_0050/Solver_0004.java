@@ -64,7 +64,7 @@ implements ISolver {
     int value = number;
     int acc = 0;
     while (value > 0) {
-      acc = acc * 10 + value % 10;
+      acc = (acc * 10) + (value % 10);
       value /= 10;
     }
     return acc == number;

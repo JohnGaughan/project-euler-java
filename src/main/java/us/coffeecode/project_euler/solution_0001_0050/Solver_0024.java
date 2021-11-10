@@ -16,8 +16,8 @@
  */
 package us.coffeecode.project_euler.solution_0001_0050;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Component;
@@ -59,7 +59,8 @@ implements ISolver {
     long answer = 0;
     int remainder = 999999;
 
-    final List<Integer> numbers = IntStream.rangeClosed(0, 9).boxed().collect(Collectors.toList());
+    // Technically, neither toList() nor Collectors.toList() guarantee mutability. Make a list that is.
+    final List<Integer> numbers = new ArrayList<>(IntStream.rangeClosed(0, 9).boxed().toList());
 
     for (int i = 1; i < DIGIT_COUNT; ++i) {
       final int factorial = IntStream.rangeClosed(2, DIGIT_COUNT - i).reduce(1, (x, y) -> x * y);
@@ -74,10 +75,11 @@ implements ISolver {
 
     // Add the last digit if not previously calculated.
     if (!numbers.isEmpty()) {
-      answer = 10 * answer + numbers.get(0).intValue();
+      answer *= 10;
+      answer += numbers.get(0).intValue();
     }
 
-    return answer;// Long.parseLong(ordinal.toString());
+    return answer;
   }
 
 }

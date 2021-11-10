@@ -55,7 +55,7 @@ implements ISolver {
     for (int a = 1; a < 9; ++a) {
       for (int b = 1; b < 10; ++b) {
         for (int c = a + 1; c < 10; ++c) {
-          if (10 * a * b + a * c == 10 * a * c + b * c) {
+          if ((10 * a * b) + (a * c) == (10 * a * c) + (b * c)) {
             numerator *= a;
             denominator *= c;
           }

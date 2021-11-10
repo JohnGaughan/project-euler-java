@@ -44,12 +44,8 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0037
 implements ISolver {
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0037(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {
@@ -60,7 +56,7 @@ implements ISolver {
   public long getActualResult() {
     final int[] primes = primeProvider.getFirstNPrimes(60_000);
     int result = 0;
-    for (int i = 4, found = 0; i < primes.length && found < 11; ++i) {
+    for (int i = 4, found = 0; (i < primes.length) && (found < 11); ++i) {
       if (isTruncatableRight(primes[i], primes) && isTruncatableLeft(primes[i], primes)) {
         ++found;
         result += primes[i];

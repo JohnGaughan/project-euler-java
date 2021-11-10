@@ -49,9 +49,9 @@ implements ISolver {
   @Override
   public long getActualResult() {
     for (int a = 1; a < 995; ++a) {
-      for (int b = a + 1; b < SUM - a >> 1; ++b) {
-        final int c = SUM - a - b;
-        final int left = a * a + b * b;
+      for (int b = a + 1; b < (SUM - a) >> 1; ++b) {
+        final int c = (SUM - a) - b;
+        final int left = (a * a) + (b * b);
         final int right = c * c;
         if (left > right) {
           break;

@@ -77,7 +77,7 @@ implements ISolver {
   private int countTriangles(final int perimeter) {
     int triangles = 0;
     for (int a = 1; a < perimeter / 3; ++a) {
-      int b1 = perimeter * (perimeter - 2 * a);
+      int b1 = perimeter * (perimeter - (a << 1));
       int b2 = (perimeter - a) << 1;
       if (b1 % b2 == 0) {
         ++triangles;

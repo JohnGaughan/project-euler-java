@@ -65,7 +65,7 @@ implements IPrimeProvider {
     if (quantityOfPrimes == 0) {
       return primes;
     }
-    try (FileChannel channel = FileChannel.open(primeFile)) {
+    try (final FileChannel channel = FileChannel.open(primeFile)) {
       final long intsAvailable = channel.size() / Integer.BYTES;
       if (intsAvailable < quantityOfPrimes) {
         throw new InsufficientPrimesAvailableException(
@@ -79,7 +79,7 @@ implements IPrimeProvider {
         primes[i] = buffer.getInt();
       }
     }
-    catch (IOException ex) {
+    catch (final IOException ex) {
       throw new RuntimeException(ex);
     }
     return primes;
@@ -110,10 +110,10 @@ implements IPrimeProvider {
         ++quantityOfPrimes;
       }
     }
-    catch (RuntimeException ex) {
+    catch (final RuntimeException ex) {
       throw ex;
     }
-    catch (Exception ex) {
+    catch (final Exception ex) {
       throw new RuntimeException(ex);
     }
     return getFirstNPrimes(quantityOfPrimes);

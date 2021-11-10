@@ -54,7 +54,7 @@ implements ISolver {
     for (int i = 1; i <= 1_000; ++i) {
       long value = 1;
       for (int j = 0; j < i; ++j) {
-        value = value * i % MOD;
+        value = (value * i) % MOD;
       }
       result = (result + value) % MOD;
     }

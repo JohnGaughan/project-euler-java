@@ -43,14 +43,8 @@ import us.coffeecode.project_euler.common.Factorizer;
 public class Solver_0021
 implements ISolver {
 
-  private static final int MAX = 10_000;
-
-  private final Factorizer factorizer;
-
   @Autowired
-  public Solver_0021(final Factorizer factors) {
-    factorizer = factors;
-  }
+  private Factorizer factorizer;
 
   @Override
   public long getExpectedResult() {
@@ -59,13 +53,13 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    return IntStream.range(1, MAX).filter(this::isAmicable).sum();
+    return IntStream.range(1, 10_000).filter(this::isAmicable).sum();
   }
 
   private boolean isAmicable(final int number) {
-    final int sumDivisors = IntStream.of(factorizer.factor(number)).sum();
+    final int sumDivisors = IntStream.of(factorizer.apply(number)).sum();
     if (sumDivisors != number) {
-      final int sumDivisorsOfSumDivisors = IntStream.of(factorizer.factor(sumDivisors)).sum();
+      final int sumDivisorsOfSumDivisors = IntStream.of(factorizer.apply(sumDivisors)).sum();
       // Does applying the transform twice give the original number?
       return number == sumDivisorsOfSumDivisors;
     }

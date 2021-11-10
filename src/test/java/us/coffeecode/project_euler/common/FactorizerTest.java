@@ -16,8 +16,8 @@
  */
 package us.coffeecode.project_euler.common;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -34,50 +34,50 @@ public final class FactorizerTest {
   @Test
   public void test_0() {
     final int[] expected = new int[0];
-    final int[] actual = new Factorizer().factor(0);
-    Assert.assertArrayEquals(expected, actual);
+    final int[] actual = new Factorizer().apply(0);
+    Assertions.assertArrayEquals(expected, actual);
   }
 
   @Test
   public void test_1() {
     final int[] expected = new int[0];
-    final int[] actual = new Factorizer().factor(1);
-    Assert.assertArrayEquals(expected, actual);
+    final int[] actual = new Factorizer().apply(1);
+    Assertions.assertArrayEquals(expected, actual);
   }
 
   @Test
   public void test_2() {
     final int[] expected = new int[] { 1 };
-    final int[] actual = new Factorizer().factor(2);
-    Assert.assertArrayEquals(expected, actual);
+    final int[] actual = new Factorizer().apply(2);
+    Assertions.assertArrayEquals(expected, actual);
   }
 
   @Test
   public void test_4() {
     final int[] expected = new int[] { 1, 2 };
-    final int[] actual = new Factorizer().factor(4);
-    Assert.assertArrayEquals(expected, actual);
+    final int[] actual = new Factorizer().apply(4);
+    Assertions.assertArrayEquals(expected, actual);
   }
 
   @Test
   public void test_17() {
     final int[] expected = new int[] { 1 };
-    final int[] actual = new Factorizer().factor(17);
-    Assert.assertArrayEquals(expected, actual);
+    final int[] actual = new Factorizer().apply(17);
+    Assertions.assertArrayEquals(expected, actual);
   }
 
   @Test
   public void test_24() {
     final int[] expected = new int[] { 1, 2, 3, 4, 6, 8, 12 };
-    final int[] actual = new Factorizer().factor(24);
-    Assert.assertArrayEquals(expected, actual);
+    final int[] actual = new Factorizer().apply(24);
+    Assertions.assertArrayEquals(expected, actual);
   }
 
   @Test
   public void test_100() {
     final int[] expected = new int[] { 1, 2, 4, 5, 10, 20, 25, 50 };
-    final int[] actual = new Factorizer().factor(100);
-    Assert.assertArrayEquals(expected, actual);
+    final int[] actual = new Factorizer().apply(100);
+    Assertions.assertArrayEquals(expected, actual);
   }
 
 }

@@ -46,7 +46,7 @@ public class PrimeFactorizer {
    * @return prime factors, in ascending order. Each list element is a two-element array: the first value is the factor,
    * the second is the number of times it appears.
    */
-  public List<int[]> factor(final int[] primes, final int number) {
+  public List<int[]> apply(final int[] primes, final int number) {
     final Integer key = Integer.valueOf(number);
     if (!primeCache.containsKey(key)) {
       final List<int[]> factors = new LinkedList<>();

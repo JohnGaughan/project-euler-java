@@ -51,7 +51,8 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    return LongStream.rangeClosed(1, INPUT).reduce(1, (x, y) -> x * (2 * INPUT + 1 - y) / y);
+    final long doubled = INPUT << 1;
+    return LongStream.rangeClosed(1, INPUT).reduce(1, (x, y) -> x * (doubled + 1 - y) / y);
   }
 
 }

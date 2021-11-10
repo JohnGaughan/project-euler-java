@@ -64,12 +64,8 @@ implements ISolver {
 
   private static final int LIMIT = 1_000;
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0027(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {
@@ -96,7 +92,7 @@ implements ISolver {
 
   private int getPrimeSequenceLength(final int a, final int b, final int[] primes) {
     int n = 0;
-    while (0 <= Arrays.binarySearch(primes, n * n + a * n + b)) {
+    while (0 <= Arrays.binarySearch(primes, (n * n) + (a * n) + b)) {
       ++n;
     }
     return n;

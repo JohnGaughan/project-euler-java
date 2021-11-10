@@ -16,12 +16,11 @@
  */
 package us.coffeecode.project_euler.solution;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
 import us.coffeecode.project_euler.InjectionConfiguration;
@@ -40,22 +39,21 @@ abstract class AbstractTestSolvers {
 
   private static ConfigurableApplicationContext context;
 
-  @BeforeClass
-  public static void before() {
+  @BeforeAll
+  private static void before() {
     context = new AnnotationConfigApplicationContext(InjectionConfiguration.class);
   }
 
-  @AfterClass
-  public static void after() {
+  @AfterAll
+  private static void after() {
     context.close();
   }
 
-  protected void test(final Class<? extends ISolver> impl) throws Exception {
-    final String problem = impl.getAnnotation(Component.class).value();
+  protected static void test(final Class<? extends ISolver> impl) throws Exception {
     final ISolver solver = context.getBean(impl);
     final long expected = solver.getExpectedResult();
     final long actual = solver.getActualResult();
-    Assert.assertEquals("Incorrect result for problem " + problem, expected, actual);
+    Assertions.assertEquals(expected, actual);
   }
 
 }

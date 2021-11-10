@@ -16,11 +16,13 @@
  */
 package us.coffeecode.project_euler.common;
 
-import java.nio.file.Path;
+import java.util.function.LongUnaryOperator;
+
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * Central location for getting paths of input files for Euler problems.
+ * Given an ordinal n, map it to S(n) which is the square number n in the sequence of all squares.
  * </p>
  * <p>
  * Copyright (c) 2021 John Gaughan
@@ -28,10 +30,14 @@ import java.nio.file.Path;
  *
  * @author John Gaughan &lt;john@coffeecode.us&gt;
  */
-public final class InputPath {
+@Component
+public class Square
+implements LongUnaryOperator {
 
-  public static final Path of(final String filename) {
-    return Path.of("src", "main", "resources", filename);
+  /** {@inheritDoc} */
+  @Override
+  public long applyAsLong(final long operand) {
+    return operand * operand;
   }
 
 }

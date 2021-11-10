@@ -39,8 +39,6 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0002
 implements ISolver {
 
-  private static final int INPUT = 4_000_000;
-
   @Override
   public long getExpectedResult() {
     return 4_613_732;
@@ -51,7 +49,7 @@ implements ISolver {
     int sum = 0;
     int n0 = 0;
     int n1 = 1;
-    while (n1 <= INPUT) {
+    while (n1 <= 4_000_000) {
       if (n1 % 2 == 0) {
         sum += n1;
       }

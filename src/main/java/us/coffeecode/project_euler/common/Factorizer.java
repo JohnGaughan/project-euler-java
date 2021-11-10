@@ -19,6 +19,7 @@ package us.coffeecode.project_euler.common;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.IntFunction;
 
 import org.springframework.stereotype.Component;
 
@@ -33,7 +34,8 @@ import org.springframework.stereotype.Component;
  * @author John Gaughan &lt;john@coffeecode.us&gt;
  */
 @Component
-public class Factorizer {
+public class Factorizer
+implements IntFunction<int[]> {
 
   private final Map<Integer, int[]> factorCache = new HashMap<>();
 
@@ -43,7 +45,8 @@ public class Factorizer {
    * @param number the number for which to get the factorization.
    * @return the factors, in ascending order. Includes one but not the number itself.
    */
-  public int[] factor(final int value) {
+  @Override
+  public int[] apply(final int value) {
     final Integer key = Integer.valueOf(value);
     if (!factorCache.containsKey(key)) {
       final int ceiling = value >> 1;

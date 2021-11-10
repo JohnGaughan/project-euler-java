@@ -41,16 +41,16 @@ public class InjectionConfiguration {
 
   @Bean
   public IPrimeProvider getPrimeProvider() {
-    IPrimeProvider primes = new FileCachePrimeProvider(Path.of("primes.bin"));
+    final IPrimeProvider primes = new FileCachePrimeProvider(Path.of("primes.bin"));
     try {
       // This pre-caches primes prior to running any test cases. This way none of them have severe lag from the amount
       // of time required to generate and cache the prime numbers.
       primes.getFirstNPrimes(1);
     }
-    catch (RuntimeException ex) {
+    catch (final RuntimeException ex) {
       throw ex;
     }
-    catch (Exception ex) {
+    catch (final Exception ex) {
       throw new RuntimeException(ex);
     }
     return primes;

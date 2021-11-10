@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -43,7 +43,7 @@ public final class PrimeFactorizerTest {
 
   private static int[] primes;
 
-  @BeforeClass
+  @BeforeAll
   public static void before() throws Exception {
     try (
     ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(InjectionConfiguration.class)) {
@@ -69,16 +69,16 @@ public final class PrimeFactorizerTest {
   public void test_0() {
     final PrimeFactorizer factorizer = new PrimeFactorizer();
     final List<int[]> expected = new ArrayList<>();
-    final List<int[]> actual = factorizer.factor(primes, 0);
-    Assert.assertTrue(equals(expected, actual));
+    final List<int[]> actual = factorizer.apply(primes, 0);
+    Assertions.assertTrue(equals(expected, actual));
   }
 
   @Test
   public void test_1() {
     final PrimeFactorizer factorizer = new PrimeFactorizer();
     final List<int[]> expected = new ArrayList<>();
-    final List<int[]> actual = factorizer.factor(primes, 1);
-    Assert.assertTrue(equals(expected, actual));
+    final List<int[]> actual = factorizer.apply(primes, 1);
+    Assertions.assertTrue(equals(expected, actual));
   }
 
   @Test
@@ -86,8 +86,8 @@ public final class PrimeFactorizerTest {
     final PrimeFactorizer factorizer = new PrimeFactorizer();
     final List<int[]> expected = new ArrayList<>();
     expected.add(new int[] { 2, 1 });
-    final List<int[]> actual = factorizer.factor(primes, 2);
-    Assert.assertTrue(equals(expected, actual));
+    final List<int[]> actual = factorizer.apply(primes, 2);
+    Assertions.assertTrue(equals(expected, actual));
   }
 
   @Test
@@ -96,8 +96,8 @@ public final class PrimeFactorizerTest {
     final List<int[]> expected = new ArrayList<>();
     expected.add(new int[] { 2, 1 });
     expected.add(new int[] { 3, 1 });
-    final List<int[]> actual = factorizer.factor(primes, 6);
-    Assert.assertTrue(equals(expected, actual));
+    final List<int[]> actual = factorizer.apply(primes, 6);
+    Assertions.assertTrue(equals(expected, actual));
   }
 
   @Test
@@ -106,8 +106,8 @@ public final class PrimeFactorizerTest {
     final List<int[]> expected = new ArrayList<>();
     expected.add(new int[] { 2, 2 });
     expected.add(new int[] { 3, 1 });
-    final List<int[]> actual = factorizer.factor(primes, 12);
-    Assert.assertTrue(equals(expected, actual));
+    final List<int[]> actual = factorizer.apply(primes, 12);
+    Assertions.assertTrue(equals(expected, actual));
   }
 
   @Test
@@ -115,8 +115,8 @@ public final class PrimeFactorizerTest {
     final PrimeFactorizer factorizer = new PrimeFactorizer();
     final List<int[]> expected = new ArrayList<>();
     expected.add(new int[] { 17, 1 });
-    final List<int[]> actual = factorizer.factor(primes, 17);
-    Assert.assertTrue(equals(expected, actual));
+    final List<int[]> actual = factorizer.apply(primes, 17);
+    Assertions.assertTrue(equals(expected, actual));
   }
 
   @Test
@@ -125,8 +125,8 @@ public final class PrimeFactorizerTest {
     final List<int[]> expected = new ArrayList<>();
     expected.add(new int[] { 2, 3 });
     expected.add(new int[] { 3, 1 });
-    final List<int[]> actual = factorizer.factor(primes, 24);
-    Assert.assertTrue(equals(expected, actual));
+    final List<int[]> actual = factorizer.apply(primes, 24);
+    Assertions.assertTrue(equals(expected, actual));
   }
 
 }

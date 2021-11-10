@@ -16,6 +16,8 @@
  */
 package us.coffeecode.project_euler.solution_0001_0050;
 
+import java.util.stream.IntStream;
+
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
@@ -40,8 +42,6 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0036
 implements ISolver {
 
-  private static final int LIMIT = 1_000_000;
-
   @Override
   public long getExpectedResult() {
     return 872_187;
@@ -49,33 +49,17 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    int result = 0;
-    for (int candidate = 1; candidate <= LIMIT; candidate += 2) {
-      if (isBinaryPalindrome(candidate) && isDecimalPalindrome(candidate)) {
-        result += candidate;
-      }
-    }
-    return result;
+    return IntStream.iterate(1, i -> (i <= 1_000_000), i -> (i + 2)).filter(
+      i -> isPalindrome(i, 2) && isPalindrome(i, 10)).sum();
   }
 
-  private boolean isBinaryPalindrome(final int value) {
+  private boolean isPalindrome(final int value, final int base) {
     int v = value;
     int r = 0;
     while (v > 0) {
-      r <<= 1;
-      r += v % 2;
-      v >>= 1;
-    }
-    return r == value;
-  }
-
-  private boolean isDecimalPalindrome(final int value) {
-    int v = value;
-    int r = 0;
-    while (v > 0) {
-      r *= 10;
-      r += v % 10;
-      v /= 10;
+      r *= base;
+      r += v % base;
+      v /= base;
     }
     return r == value;
   }

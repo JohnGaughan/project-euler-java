@@ -41,12 +41,8 @@ implements ISolver {
 
   private static final int INPUT = 10_001;
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0007(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {

@@ -18,14 +18,16 @@ package us.coffeecode.project_euler.solution_0001_0050;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
+import us.coffeecode.project_euler.common.Triangular;
 
 /**
  * <p>
@@ -46,7 +48,8 @@ import us.coffeecode.project_euler.common.InputPath;
 public class Solver_0042
 implements ISolver {
 
-  private static final Path INPUT = InputPath.of("input-problem-0042.txt");
+  @Autowired
+  private Triangular triangular;
 
   @Override
   public long getExpectedResult() {
@@ -55,28 +58,15 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    final Set<Integer> triangleNumbers = getTriangleNumbers(100);
-    int result = 0;
-    for (final String word : getWords()) {
-      final int value = word.codePoints().map(ch -> ch - 'A' + 1).sum();
-      if (triangleNumbers.contains(Integer.valueOf(value))) {
-        ++result;
-      }
-    }
-    return result;
+    final Set<Integer> triangles =
+      LongStream.rangeClosed(1, 100).map(triangular).mapToObj(l -> Integer.valueOf((int) l)).collect(Collectors.toSet());
+    return getScores().stream().filter(triangles::contains).count();
   }
 
-  private Set<Integer> getTriangleNumbers(final int amount) {
-    final Set<Integer> triangleNumbers = new HashSet<>(amount * 4 / 3);
-    for (int i = 1; i <= amount; ++i) {
-      triangleNumbers.add(Integer.valueOf(i * (i + 1) / 2));
-    }
-    return triangleNumbers;
-  }
-
-  private Iterable<String> getWords() {
+  private Collection<Integer> getScores() {
     try {
-      return Files.readAllLines(INPUT);
+      return Files.readAllLines(getInputPath()).stream().map(
+        s -> Integer.valueOf(s.codePoints().map(c -> c - 'A' + 1).sum())).toList();
     }
     catch (IOException ex) {
       throw new RuntimeException(ex);

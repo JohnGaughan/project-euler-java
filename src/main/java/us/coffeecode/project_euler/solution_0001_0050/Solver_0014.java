@@ -54,7 +54,7 @@ implements ISolver {
     int answer = Integer.MIN_VALUE;
 
     // Ignore 1, which is not the answer anyway.
-    for (int i = 2; i < NUMBERS_TO_SEARCH; ++i) {
+    for (int i = 2; i < cache.length; ++i) {
       int chainLength = 0;
       long value = i;
       while (value >= i) {
@@ -63,7 +63,7 @@ implements ISolver {
           value >>= 1;
         }
         else {
-          value = 3 * value + 1;
+          value = (3 * value) + 1;
         }
       }
       cache[i] = chainLength + cache[(int) value];

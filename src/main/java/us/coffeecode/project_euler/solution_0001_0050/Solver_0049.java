@@ -43,15 +43,11 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0049
 implements ISolver {
 
-  private final IPrimeProvider primeProvider;
-
-  private final PermutationCheck permutations;
+  @Autowired
+  private IPrimeProvider primeProvider;
 
   @Autowired
-  public Solver_0049(final IPrimeProvider provider, final PermutationCheck permCheck) {
-    primeProvider = provider;
-    permutations = permCheck;
-  }
+  private PermutationCheck permutations;
 
   @Override
   public long getExpectedResult() {
@@ -64,8 +60,8 @@ implements ISolver {
     for (int i = 0; i < primes.length; ++i) {
       for (int j = i + 1; j < primes.length; ++j) {
         final int k = (primes[j] << 1) - primes[i];
-        if (0 <= Arrays.binarySearch(primes, k) && permutations.check(primes[i], primes[j])
-          && permutations.check(primes[i], k)) {
+        if ((0 <= Arrays.binarySearch(primes, k)) && permutations.test(primes[i], primes[j])
+          && permutations.test(primes[i], k)) {
           return k + 10_000L * primes[j] + 100_000_000L * primes[i];
         }
       }

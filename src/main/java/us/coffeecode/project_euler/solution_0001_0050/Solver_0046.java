@@ -18,6 +18,7 @@ package us.coffeecode.project_euler.solution_0001_0050;
 
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,12 +47,8 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0046
 implements ISolver {
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0046(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {
@@ -61,12 +58,8 @@ implements ISolver {
   @Override
   public long getActualResult() {
     final int[] primes = primeProvider.getFirstNPrimes(1_000_000);
-    for (int i = 35; i < Integer.MAX_VALUE; i += 2) {
-      if ((Arrays.binarySearch(primes, i) < 0) && !test(i, primes)) {
-        return i;
-      }
-    }
-    return -1;
+    return IntStream.iterate(35, i -> i > 0, i -> i + 2).filter(
+      i -> (Arrays.binarySearch(primes, i) < 0) && !test(i, primes)).findFirst().getAsInt();
   }
 
   /** Test a number to see if it can be expressed as the sum of a prime and twice a square. */
@@ -74,7 +67,7 @@ implements ISolver {
     boolean result = false;
     for (final int p : primes) {
       // Twice a square must be even. Since n is odd, the difference (prime) must be odd. This helps with integer math.
-      if (p == 2 || p > n - 1) {
+      if ((p == 2) || (p > n - 1)) {
         continue;
       }
       final int diff = n - p;

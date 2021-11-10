@@ -47,12 +47,8 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0012
 implements ISolver {
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0012(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {
@@ -72,7 +68,7 @@ implements ISolver {
         dn1 = getTotalFactors(primes, (i + 1) / 2);
       }
     }
-    return i * (i - 1) / 2;
+    return (i * (i - 1)) >> 1;
   }
 
   private int getTotalFactors(final int[] primes, final int number) {

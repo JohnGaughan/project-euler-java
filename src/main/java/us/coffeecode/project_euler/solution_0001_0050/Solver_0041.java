@@ -16,6 +16,8 @@
  */
 package us.coffeecode.project_euler.solution_0001_0050;
 
+import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,17 +48,11 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0041
 implements ISolver {
 
-  private static final int LIMIT = 7_654_321;
-
-  private final IPrimeProvider primeProvider;
-
-  private final Pandigital pandigital;
+  @Autowired
+  private IPrimeProvider primeProvider;
 
   @Autowired
-  public Solver_0041(final IPrimeProvider provider, final Pandigital pandigit) {
-    primeProvider = provider;
-    pandigital = pandigit;
-  }
+  private Pandigital pandigital;
 
   @Override
   public long getExpectedResult() {
@@ -65,13 +61,9 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    final int[] primes = primeProvider.getPrimesEqualToOrLessThan(LIMIT);
-    for (int i = primes.length - 1; i >= 0; --i) {
-      if (pandigital.is(primes[i])) {
-        return primes[i];
-      }
-    }
-    return -1;
+    final int[] primes = primeProvider.getPrimesEqualToOrLessThan(7_654_321);
+    return IntStream.iterate(primes.length - 1, (i -> i >= 0), (i -> i - 1)).map(i -> primes[i]).filter(
+      pandigital).findFirst().getAsInt();
   }
 
 }

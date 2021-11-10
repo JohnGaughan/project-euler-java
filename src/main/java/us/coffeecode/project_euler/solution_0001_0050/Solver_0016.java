@@ -16,7 +16,7 @@
  */
 package us.coffeecode.project_euler.solution_0001_0050;
 
-import java.math.BigInteger;
+import static java.math.BigInteger.ONE;
 
 import org.springframework.stereotype.Component;
 
@@ -41,10 +41,6 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0016
 implements ISolver {
 
-  private static final BigInteger BASE = BigInteger.ONE;
-
-  private static final int POWER = 1_000;
-
   @Override
   public long getExpectedResult() {
     return 1_366;
@@ -52,7 +48,7 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    return BASE.shiftLeft(POWER).toString().codePoints().map(ch -> ch - '0').sum();
+    return ONE.shiftLeft(1_000).toString().codePoints().map(c -> c - '0').sum();
   }
 
 }

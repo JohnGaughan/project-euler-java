@@ -61,7 +61,7 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    int result = 0;
+    long result = 0;
     for (int i = 10; i < 10_000; ++i) {
       if (isLychrel(BigInteger.valueOf(i))) {
         ++result;

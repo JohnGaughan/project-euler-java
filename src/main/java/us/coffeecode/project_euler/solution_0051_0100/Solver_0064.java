@@ -52,7 +52,7 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    int result = 0;
+    long result = 0;
     for (int n = 2; n <= LIMIT; ++n) {
       int limit = IntMath.sqrt(n, RoundingMode.DOWN);
       if (limit * limit == n) {
@@ -63,12 +63,12 @@ implements ISolver {
       int m = 0;
       int a = limit;
       do {
-        m = d * a - m;
+        m = (d * a) - m;
         d = (n - m * m) / d;
         a = (limit + m) / d;
         ++period;
-      } while (a != 2 * limit);
-      if (period % 2 == 1) {
+      } while (a != (limit << 1));
+      if ((period & 1) == 1) {
         ++result;
       }
     }

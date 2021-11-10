@@ -49,7 +49,7 @@ implements ISolver {
   public long getActualResult() {
     final int squared = INPUT * INPUT;
     final int cubed = INPUT * squared;
-    final int sumOfSquares = (2 * cubed + 3 * squared + INPUT) / 6;
+    final int sumOfSquares = ((2 * cubed) + (3 * squared) + INPUT) / 6;
 
     final int sum = (INPUT + squared) >> 1;
     final int squareOfSum = sum * sum;

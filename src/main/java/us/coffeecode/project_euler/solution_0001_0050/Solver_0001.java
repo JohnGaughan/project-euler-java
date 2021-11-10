@@ -42,8 +42,6 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0001
 implements ISolver {
 
-  private static final int INPUT = 1_000;
-
   @Override
   public long getExpectedResult() {
     return 233_168;
@@ -51,7 +49,7 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    return IntStream.range(1, INPUT).filter(i -> i % 3 == 0 || i % 5 == 0).sum();
+    return IntStream.range(1, 1_000).filter(i -> (i % 3 == 0) || (i % 5 == 0)).sum();
   }
 
 }

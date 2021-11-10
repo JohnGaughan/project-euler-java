@@ -16,6 +16,8 @@
  */
 package us.coffeecode.project_euler.common;
 
+import java.util.function.IntPredicate;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,10 +32,12 @@ import org.springframework.stereotype.Component;
  * @author John Gaughan &lt;john@coffeecode.us&gt;
  */
 @Component
-public class Pandigital {
+public class Pandigital
+implements IntPredicate {
 
-  public boolean is(final long n) {
-    final String str = Long.toString(n);
+  @Override
+  public boolean test(final int value) {
+    final String str = Integer.toString(value);
     final boolean[] digitsFound = new boolean[str.length()];
 
     // Zeros are only valid if the string is length ten, but zero comes before 1 in ASCII.
@@ -41,13 +45,13 @@ public class Pandigital {
     for (int i = 0; i < str.length(); ++i) {
       final int digit = str.charAt(i) - offset;
       // If the number is not pandigital, e.g. 1523, the digit will be out of range of the array.
-      if (0 <= digit && digit < digitsFound.length) {
+      if ((0 <= digit) && (digit < digitsFound.length)) {
         digitsFound[digit] = true;
       }
     }
 
     boolean allDigitsFound = true;
-    for (int i = 0; allDigitsFound && i < digitsFound.length; ++i) {
+    for (int i = 0; allDigitsFound && (i < digitsFound.length); ++i) {
       allDigitsFound &= digitsFound[i];
     }
     return allDigitsFound;

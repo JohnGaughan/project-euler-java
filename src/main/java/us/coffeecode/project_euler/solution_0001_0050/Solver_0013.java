@@ -21,14 +21,11 @@ import static java.math.BigInteger.ZERO;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -48,8 +45,6 @@ import us.coffeecode.project_euler.common.InputPath;
 public class Solver_0013
 implements ISolver {
 
-  private static final Path INPUT = InputPath.of("input-problem-0013.txt");
-
   @Override
   public long getExpectedResult() {
     return 5_537_376_230L;
@@ -62,9 +57,9 @@ implements ISolver {
     return Long.parseLong(digits);
   }
 
-  private List<BigInteger> loadInput() {
+  private Collection<BigInteger> loadInput() {
     try {
-      return Files.readAllLines(INPUT).stream().map(BigInteger::new).collect(Collectors.toList());
+      return Files.readAllLines(getInputPath()).stream().map(BigInteger::new).toList();
     }
     catch (IOException ex) {
       throw new RuntimeException(ex);

@@ -77,7 +77,7 @@ implements ISolver {
       if (0 <= Arrays.binarySearch(primes, corners[2])) {
         ++numPrimes;
       }
-    } while (numPrimes * 10 >= 2 * sideLength - 1);
+    } while ((numPrimes * 10) >= ((sideLength << 1) - 1));
     return sideLength;
   }
 

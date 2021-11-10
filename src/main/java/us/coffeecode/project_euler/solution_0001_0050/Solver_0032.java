@@ -65,18 +65,20 @@ implements ISolver {
 
   private Set<Integer> getPandigitals() {
     final Set<Integer> results = new HashSet<>();
+    // 1 + 4 + 4
     for (int a = 2; a < 10; ++a) {
-      for (int b = 1234; b <= 9876; ++b) {
+      for (int b = 1_234; b <= 9_876; ++b) {
         final int c = a * b;
         if (c < 9876 && areCombinedPandigital(a, b, c)) {
           results.add(Integer.valueOf(c));
         }
       }
     }
+    // 2 + 3 + 4
     for (int a = 12; a < 99; ++a) {
       for (int b = 123; b <= 987; ++b) {
         final int c = a * b;
-        if (c < 9876 && areCombinedPandigital(a, b, c)) {
+        if (c < 9_876 && areCombinedPandigital(a, b, c)) {
           results.add(Integer.valueOf(c));
         }
       }
@@ -88,16 +90,16 @@ implements ISolver {
     int x = a;
     // a is one digit. b and c are four digits.
     if (a < 10) {
-      x *= 10000;
+      x *= 10_000;
       x += b;
-      x *= 10000;
+      x *= 10_000;
       x += c;
     }
     // a is two digits. b is three digits, c is four digits.
     else {
-      x *= 1000;
+      x *= 1_000;
       x += b;
-      x *= 10000;
+      x *= 10_000;
       x += c;
     }
     final int[] digits = new int[9];

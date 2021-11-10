@@ -43,15 +43,11 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0047
 implements ISolver {
 
-  private final IPrimeProvider primeProvider;
-
-  private final PrimeFactorizer primeFactorizer;
+  @Autowired
+  private IPrimeProvider primeProvider;
 
   @Autowired
-  public Solver_0047(final IPrimeProvider provider, final PrimeFactorizer factorizer) {
-    primeProvider = provider;
-    primeFactorizer = factorizer;
-  }
+  private PrimeFactorizer primeFactorizer;
 
   @Override
   public long getExpectedResult() {
@@ -63,10 +59,10 @@ implements ISolver {
     final int[] primes = primeProvider.getFirstNPrimes(128);
     int result = -1;
     for (int i = 210; i < Integer.MAX_VALUE && result < 0; ++i) {
-      if (primeFactorizer.factor(primes, i).size() >= 4) {
-        if (primeFactorizer.factor(primes, i + 1).size() >= 4) {
-          if (primeFactorizer.factor(primes, i + 2).size() >= 4) {
-            if (primeFactorizer.factor(primes, i + 3).size() >= 4) {
+      if (primeFactorizer.apply(primes, i).size() >= 4) {
+        if (primeFactorizer.apply(primes, i + 1).size() >= 4) {
+          if (primeFactorizer.apply(primes, i + 2).size() >= 4) {
+            if (primeFactorizer.apply(primes, i + 3).size() >= 4) {
               result = i;
             }
             else {

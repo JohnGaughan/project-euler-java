@@ -52,14 +52,14 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    int result = 0;
+    long result = 0;
     for (int x = 2; x < LIMIT; ++x) {
       if (x == 10) {
         continue;
       }
       for (int y = 2; y < LIMIT; ++y) {
         final BigInteger value = BigInteger.valueOf(x).pow(y);
-        final int sum = value.toString().codePoints().map(ch -> ch - '0').sum();
+        final long sum = value.toString().codePoints().map(ch -> ch - '0').sum();
         if (sum > result) {
           result = sum;
         }

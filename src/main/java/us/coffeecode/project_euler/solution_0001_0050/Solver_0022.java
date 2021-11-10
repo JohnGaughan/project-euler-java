@@ -18,13 +18,10 @@ package us.coffeecode.project_euler.solution_0001_0050;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -46,8 +43,6 @@ import us.coffeecode.project_euler.common.InputPath;
 public class Solver_0022
 implements ISolver {
 
-  private static final Path INPUT = InputPath.of("input-problem-0022.txt");
-
   @Override
   public long getExpectedResult() {
     return 871_198_282;
@@ -55,7 +50,7 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    int result = 0;
+    long result = 0;
     final int[] scores = getInput();
     for (int i = 0; i < scores.length; ++i) {
       result += (i + 1) * scores[i];
@@ -63,10 +58,10 @@ implements ISolver {
     return result;
   }
 
-  public int[] getInput() {
+  private int[] getInput() {
     try {
-      return Files.readAllLines(INPUT).stream().sorted().collect(Collectors.toList()).stream().mapToInt(
-        s -> s.codePoints().map(ch -> ch - 'A' + 1).sum()).toArray();
+      return Files.readAllLines(getInputPath()).stream().sorted().mapToInt(
+        s -> s.codePoints().map(c -> c - 'A' + 1).sum()).toArray();
     }
     catch (IOException ex) {
       throw new RuntimeException(ex);

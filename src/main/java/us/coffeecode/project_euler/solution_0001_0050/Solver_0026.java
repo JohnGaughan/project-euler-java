@@ -54,12 +54,8 @@ implements ISolver {
 
   private static final int LIMIT = 1000;
 
-  private final IPrimeProvider primes;
-
   @Autowired
-  public Solver_0026(final IPrimeProvider p) {
-    primes = p;
-  }
+  private IPrimeProvider primes;
 
   @Override
   public long getExpectedResult() {
@@ -70,7 +66,7 @@ implements ISolver {
   public long getActualResult() {
     int numWithLongestCycle = -1;
     int longestCycle = -1;
-    for (int i : primes.getPrimesEqualToOrLessThan(LIMIT)) {
+    for (final int i : primes.getPrimesEqualToOrLessThan(LIMIT)) {
       final int cycleLength = getCycle(i);
       if (cycleLength > longestCycle) {
         numWithLongestCycle = i;

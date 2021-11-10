@@ -17,12 +17,19 @@
 package us.coffeecode.project_euler.solution_0051_0100;
 
 import java.util.Arrays;
-import java.util.function.IntPredicate;
-import java.util.stream.IntStream;
+import java.util.function.LongPredicate;
+import java.util.stream.LongStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
+import us.coffeecode.project_euler.common.Heptagonal;
+import us.coffeecode.project_euler.common.Hexagonal;
+import us.coffeecode.project_euler.common.Octagonal;
+import us.coffeecode.project_euler.common.Pentagonal;
+import us.coffeecode.project_euler.common.Square;
+import us.coffeecode.project_euler.common.Triangular;
 
 /**
  * <p>
@@ -46,9 +53,25 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0061
 implements ISolver {
 
-  private static final IntPredicate RANGE_FILTER = (i -> i >= 1_000 && i < 10_000);
+  private static final LongPredicate RANGE_FILTER = (i -> (i >= 1_000) && (i < 10_000));
 
-  private final int[][] values = new int[6][];
+  @Autowired
+  private Triangular triangular;
+
+  @Autowired
+  private Square square;
+
+  @Autowired
+  private Pentagonal pentagonal;
+
+  @Autowired
+  private Hexagonal hexagonal;
+
+  @Autowired
+  private Heptagonal heptagonal;
+
+  @Autowired
+  private Octagonal octagonal;
 
   @Override
   public long getExpectedResult() {
@@ -57,28 +80,23 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    // Triangulars
-    values[0] = IntStream.range(1, 500).map(i -> i * (i + 1) / 2).filter(RANGE_FILTER).toArray();
-    // Squares
-    values[1] = IntStream.range(1, 500).map(i -> i * i).filter(RANGE_FILTER).toArray();
-    // Pentagonals
-    values[2] = IntStream.range(1, 500).map(i -> i * (3 * i - 1) / 2).filter(RANGE_FILTER).toArray();
-    // Hexagonals
-    values[3] = IntStream.range(1, 500).map(i -> i * (2 * i - 1)).filter(RANGE_FILTER).toArray();
-    // Heptagonals
-    values[4] = IntStream.range(1, 500).map(i -> i * (5 * i - 3) / 2).filter(RANGE_FILTER).toArray();
-    // Octagonals
-    values[5] = IntStream.range(1, 500).map(i -> i * (3 * i - 2)).filter(RANGE_FILTER).toArray();
+    final long[][] values = new long[6][];
+    values[0] = LongStream.range(1, 500).map(triangular).filter(RANGE_FILTER).toArray();
+    values[1] = LongStream.range(1, 500).map(square).filter(RANGE_FILTER).toArray();
+    values[2] = LongStream.range(1, 500).map(pentagonal).filter(RANGE_FILTER).toArray();
+    values[3] = LongStream.range(1, 500).map(hexagonal).filter(RANGE_FILTER).toArray();
+    values[4] = LongStream.range(1, 500).map(heptagonal).filter(RANGE_FILTER).toArray();
+    values[5] = LongStream.range(1, 500).map(octagonal).filter(RANGE_FILTER).toArray();
 
-    return Arrays.stream(process(new boolean[values.length], new int[0])).sum();
+    return Arrays.stream(process(values, new boolean[values.length], new long[0])).sum();
   }
 
-  private int[] process(final boolean[] processed, final int[] chain) {
+  private long[] process(final long[][] values, final boolean[] processed, final long[] chain) {
     if (chain.length == values.length) {
       if (match(chain[values.length - 1], chain[0])) {
         return chain;
       }
-      return new int[0];
+      return new long[0];
     }
     // Iterate over the top-level arrays that are not being iterated further up the stack.
     for (int i = 0; i < processed.length; ++i) {
@@ -87,15 +105,15 @@ implements ISolver {
         for (int j = 0; j < values[i].length; ++j) {
           // Nothing in the chain, OR the next value is compatible with the end of the chain and the value is not
           // already in the chain.
-          if (chain.length == 0
-            || (match(chain[chain.length - 1], values[i][j]) && Arrays.binarySearch(chain, values[i][j]) < 0)) {
+          if ((chain.length == 0)
+            || (match(chain[chain.length - 1], values[i][j]) && (Arrays.binarySearch(chain, values[i][j]) < 0))) {
             // Found a new candidate, recurse
             final boolean[] newProcessed = processed.clone();
             newProcessed[i] = true;
-            final int[] newChain = new int[chain.length + 1];
+            final long[] newChain = new long[chain.length + 1];
             System.arraycopy(chain, 0, newChain, 0, chain.length);
             newChain[newChain.length - 1] = values[i][j];
-            int[] result = process(newProcessed, newChain);
+            long[] result = process(values, newProcessed, newChain);
             if (result.length > 0) {
               return result;
             }
@@ -103,11 +121,11 @@ implements ISolver {
         }
       }
     }
-    return new int[0];
+    return new long[0];
   }
 
-  private boolean match(final int a, final int b) {
-    return a % 100 == b / 100;
+  private boolean match(final long a, final long b) {
+    return (a % 100) == (b / 100);
   }
 
 }

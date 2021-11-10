@@ -16,6 +16,7 @@
  */
 package us.coffeecode.project_euler.solution_0051_0100;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
@@ -41,11 +42,8 @@ import us.coffeecode.project_euler.common.PermutationCheck;
 public class Solver_0052
 implements ISolver {
 
-  private final PermutationCheck permutations;
-
-  public Solver_0052(final PermutationCheck permCheck) {
-    permutations = permCheck;
-  }
+  @Autowired
+  private PermutationCheck permutations;
 
   @Override
   public long getExpectedResult() {
@@ -60,8 +58,8 @@ implements ISolver {
       if (firstDigit(x) != 1) {
         x = nextStartValue(x);
       }
-      if (permutations.check(x, x * 2) && permutations.check(x, 3 * x) && permutations.check(x, x * 4)
-        && permutations.check(x, 5 * x) && permutations.check(x, 6 * x)) {
+      if (permutations.test(x, x * 2) && permutations.test(x, 3 * x) && permutations.test(x, x * 4)
+        && permutations.test(x, 5 * x) && permutations.test(x, 6 * x)) {
         return x;
       }
     }
@@ -88,8 +86,7 @@ implements ISolver {
     }
     int next = 0;
     for (int i = 1; i <= digits; ++i) {
-      next *= 10;
-      next += i;
+      next = (next * 10) + i;
     }
     return next;
   }

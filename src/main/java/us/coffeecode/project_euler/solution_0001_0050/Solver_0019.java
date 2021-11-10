@@ -69,7 +69,7 @@ implements ISolver {
     for (int year = YEAR_START; year <= YEAR_END; ++year) {
       for (int month = MONTH_START; month <= MONTH_END; ++month) {
         // We need to increment through 1900 but not count any Sundays.
-        if (dayOfWeek == SUNDAY && year != YEAR_START) {
+        if ((dayOfWeek == SUNDAY) && (year != YEAR_START)) {
           ++sundays;
         }
         dayOfWeek += getNumberOfDays(year, month);

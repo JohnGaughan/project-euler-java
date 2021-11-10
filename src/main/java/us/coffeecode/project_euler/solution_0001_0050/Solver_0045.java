@@ -16,9 +16,12 @@
  */
 package us.coffeecode.project_euler.solution_0001_0050;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
+import us.coffeecode.project_euler.common.Hexagonal;
+import us.coffeecode.project_euler.common.Pentagonal;
 
 /**
  * <p>
@@ -40,6 +43,12 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0045
 implements ISolver {
 
+  @Autowired
+  private Pentagonal pentagonal;
+
+  @Autowired
+  private Hexagonal hexagonal;
+
   @Override
   public long getExpectedResult() {
     return 1_533_776_805;
@@ -47,30 +56,19 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    // Do not need to check triangle numbers. Every hexagonal number is also triangular.
-    // Start at the next two numbers above the ones in the problem. If equal, we found the next number. Otherwise,
-    // increment whichever one is smaller and check again.
     long seqPent = 166;
     long seqHex = 144;
-    long valPent = pent(seqPent);
-    long valHex = hex(seqHex);
-    while (valPent != valHex) {
+    long valPent = pentagonal.applyAsLong(seqPent);
+    long valHex = hexagonal.applyAsLong(seqHex);
+    while ((valPent != valHex) && (valPent > 0) && (valHex > 0)) {
       if (valPent < valHex) {
-        valPent = pent(++seqPent);
+        valPent = pentagonal.applyAsLong(++seqPent);
       }
       else if (valHex < valPent) {
-        valHex = hex(++seqHex);
+        valHex = hexagonal.applyAsLong(++seqHex);
       }
     }
     return valPent;
-  }
-
-  private long pent(final long n) {
-    return n * (3 * n - 1) / 2;
-  }
-
-  private long hex(final long n) {
-    return n * (2 * n - 1);
   }
 
 }

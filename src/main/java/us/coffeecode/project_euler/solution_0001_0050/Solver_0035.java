@@ -49,14 +49,8 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0035
 implements ISolver {
 
-  private static final int LIMIT = 1_000_000;
-
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0035(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {
@@ -69,8 +63,8 @@ implements ISolver {
      * This removes numbers that cannot possibly have prime rotations. This significantly reduces the number of primes
      * to rotate, while also removing an odd dependency on iteration order due to certain primes containing a zero.
      */
-    final Collection<Integer> primes = IntStream.of(primeProvider.getPrimesEqualToOrLessThan(LIMIT)).filter(
-      i -> !willBeRotatedComposite(i)).boxed().collect(Collectors.toSet());
+    final Collection<Integer> primes = IntStream.of(primeProvider.getPrimesEqualToOrLessThan(1_000_000)).filter(
+      this::mightBeRotatedPrime).boxed().collect(Collectors.toSet());
     int result = 0;
     // Keep getting a prime and checking for its rotations. Remove the primes checked.
     while (!primes.isEmpty()) {
@@ -97,26 +91,26 @@ implements ISolver {
     int current = start;
     do {
       results.add(Integer.valueOf(current));
-      current = current % 10 * magnitude + current / 10;
+      current = (current % 10) * magnitude + (current / 10);
     } while (current != start);
 
     return results;
   }
 
   /** If the prime is guaranteed to be rotated to a composite, return true. */
-  private boolean willBeRotatedComposite(final int prime) {
+  private boolean mightBeRotatedPrime(final int prime) {
     int p = prime;
     // Primes below 10 cannot be rotated composite
     if (p > 10) {
       while (p > 0) {
         // Primes must end in 1, 3, 7, or 9. Filter out primes that do not contain only those digits.
-        if (p % 5 == 0 || p % 2 == 0) {
-          return true;
+        if ((p % 5 == 0) || (p % 2 == 0)) {
+          return false;
         }
         p /= 10;
       }
     }
-    return false;
+    return true;
   }
 
 }

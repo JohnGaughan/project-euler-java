@@ -55,7 +55,7 @@ implements ISolver {
   @Override
   public long getActualResult() {
     // Size the hash table so it can fit all the numbers, considering its load factor.
-    final Set<BigInteger> terms = new HashSet<>(16384);
+    final Set<BigInteger> terms = new HashSet<>(1 << 14);
     for (int base = 2; base <= 100; ++base) {
       for (int power = 2; power <= 100; ++power) {
         final BigInteger term = BigInteger.valueOf(base).pow(power);

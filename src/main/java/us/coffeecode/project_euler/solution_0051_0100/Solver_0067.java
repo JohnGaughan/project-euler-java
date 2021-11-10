@@ -18,18 +18,17 @@ package us.coffeecode.project_euler.solution_0051_0100;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
- * <a href="https://projecteuler.net/problem=67">Problem 67</a> asks us to
+ * <a href="https://projecteuler.net/problem=67">Problem 67</a> asks us to find the maximum total of digits following
+ * any path through a triangle.
  * </p>
  * <p>
  * This solver constructs a double array of integers, where each sub-array is one larger than the one that proceeds it.
@@ -52,10 +51,6 @@ import us.coffeecode.project_euler.common.InputPath;
 public class Solver_0067
 implements ISolver {
 
-  private static final Pattern SEPARATOR = Pattern.compile(" ");
-
-  private static final Path INPUT = InputPath.of("input-problem-0067.txt");
-
   @Override
   public long getExpectedResult() {
     return 7_273;
@@ -72,9 +67,11 @@ implements ISolver {
     return triangle[0][0];
   }
 
+  private static final Pattern SEPARATOR = Pattern.compile(" ");
+
   private int[][] getInput() {
     try {
-      return Files.readAllLines(INPUT).stream().map(
+      return Files.readAllLines(getInputPath()).stream().map(
         s -> Arrays.stream(SEPARATOR.split(s)).mapToInt(Integer::parseInt).toArray()).toArray(int[][]::new);
     }
     catch (IOException ex) {

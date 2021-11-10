@@ -32,7 +32,7 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
  * two them in any order and the result is prime, and return the sum of those primes.
  * </p>
  * <p>
- * TODO: revisit and make more efficient.
+ * TODO: revisit and make more efficient. Also, the code is ugly and those highly nested loops are bad.
  * </p>
  * <p>
  * Copyright (c) 2021 John Gaughan
@@ -61,15 +61,15 @@ implements ISolver {
   public long getActualResult() {
     Set<Pair> pairs = getPairs();
     Set<Tuple> solutions = new HashSet<>();
-    for (int i = 0; i < primes.length - 4 && primes[i] < CEILING; ++i) {
-      for (int j = i + 1; j < primes.length - 3 && primes[j] < CEILING; ++j) {
+    for (int i = 0; (i < primes.length - 4) && (primes[i] < CEILING); ++i) {
+      for (int j = i + 1; (j < primes.length - 3) && (primes[j] < CEILING); ++j) {
         if (pairs.contains(new Pair(primes[i], primes[j]))) {
-          for (int k = j + 1; k < primes.length - 2 && primes[k] < CEILING; ++k) {
+          for (int k = j + 1; (k < primes.length - 2) && (primes[k] < CEILING); ++k) {
             if (pairs.contains(new Pair(primes[i], primes[k])) && pairs.contains(new Pair(primes[j], primes[k]))) {
-              for (int l = j + 1; l < primes.length - 1 && primes[l] < CEILING; ++l) {
+              for (int l = j + 1; (l < primes.length - 1) && (primes[l] < CEILING); ++l) {
                 if (pairs.contains(new Pair(primes[i], primes[l])) && pairs.contains(new Pair(primes[j], primes[l]))
                   && pairs.contains(new Pair(primes[k], primes[l]))) {
-                  for (int m = l + 1; m < primes.length && primes[m] < CEILING; ++m) {
+                  for (int m = l + 1; (m < primes.length) && (primes[m] < CEILING); ++m) {
                     if (pairs.contains(new Pair(primes[i], primes[m])) && pairs.contains(new Pair(primes[j], primes[m]))
                       && pairs.contains(new Pair(primes[k], primes[m]))
                       && pairs.contains(new Pair(primes[l], primes[m]))) {

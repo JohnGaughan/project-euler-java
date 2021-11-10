@@ -81,29 +81,27 @@ implements ISolver {
   @Override
   public long getActualResult() {
     final int[] primes = primeProvider.getFirstNPrimes(1_000_000);
-    int result = Integer.MAX_VALUE;
-    for (int digits = 11; digits < 1000 && result == Integer.MAX_VALUE; digits += 2) {
+    for (int digits = 11; digits < 1_000; digits += 2) {
       if (digits % 5 == 0) {
         continue;
       }
-      final boolean[][] patterns = digits < 100 ? table5 : table6;
+      final boolean[][] patterns = (digits < 100) ? table5 : table6;
       for (final boolean[] pattern : patterns) {
         if (getFamilySize(primes, pattern, digits) == 8) {
-          final int candidate = getFirstPrime(primes, pattern, digits);
-          result = Math.min(result, candidate);
+          return getFirstPrime(primes, pattern, digits);
         }
       }
     }
-    return result;
+    return 0;
   }
 
   /** Get the size of the prime number family. */
   private int getFamilySize(final int[] primes, final boolean[] pattern, final int digits) {
     int familySize = 0;
     int notEligible = 0;
-    for (int i = 0; i < 10 && notEligible < 3; ++i) {
+    for (int i = 0; (i < 10) && (notEligible < 3); ++i) {
       // Do not replace leading zeros.
-      if (i == 0 && pattern[0]) {
+      if ((i == 0) && pattern[0]) {
         continue;
       }
       final int num = makeNumber(pattern, digits, i);
@@ -125,7 +123,7 @@ implements ISolver {
         return num;
       }
     }
-    return -1;
+    return 0;
   }
 
   /** Make a number from the given replacement pattern, digits, and replacement digit. */
@@ -138,12 +136,9 @@ implements ISolver {
         number += replacementDigit * multiplier;
       }
       else {
-        number += v % 10 * multiplier;
+        number += (v % 10) * multiplier;
         v /= 10;
       }
-    }
-    if (number == 109) {
-      Thread.yield();
     }
     return number;
   }

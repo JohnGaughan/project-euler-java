@@ -18,14 +18,12 @@ package us.coffeecode.project_euler.solution_0001_0050;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -46,10 +44,6 @@ import us.coffeecode.project_euler.common.InputPath;
 public class Solver_0011
 implements ISolver {
 
-  private static final Path INPUT = InputPath.of("input-problem-0011.txt");
-
-  private static final Pattern SEPARATOR = Pattern.compile(",");
-
   private static final int CONSECUTIVE = 4;
 
   @Override
@@ -66,14 +60,14 @@ implements ISolver {
     int max = 0;
     for (int y = 0; y < side; ++y) {
       for (int x = 0; x < side; ++x) {
-        final boolean right = x + CONSECUTIVE - 1 < side;
-        final boolean down = y + CONSECUTIVE - 1 < side;
-        final boolean up = y - CONSECUTIVE + 1 >= 0;
+        final boolean right = y + CONSECUTIVE - 1 < side;
+        final boolean down = x + CONSECUTIVE - 1 < side;
+        final boolean up = x - CONSECUTIVE + 1 >= 0;
         // Try right.
         if (right) {
           int candidate = 1;
           for (int i = 0; i < CONSECUTIVE; ++i) {
-            candidate *= grid[x + i][y];
+            candidate *= grid[y + i][x];
           }
           max = Math.max(max, candidate);
         }
@@ -81,7 +75,7 @@ implements ISolver {
         if (down) {
           int candidate = 1;
           for (int i = 0; i < CONSECUTIVE; ++i) {
-            candidate *= grid[x][y + i];
+            candidate *= grid[y][x + i];
           }
           max = Math.max(max, candidate);
         }
@@ -89,7 +83,7 @@ implements ISolver {
         if (down && right) {
           int candidate = 1;
           for (int i = 0; i < CONSECUTIVE; ++i) {
-            candidate *= grid[x + i][y + i];
+            candidate *= grid[y + i][x + i];
           }
           max = Math.max(max, candidate);
         }
@@ -97,7 +91,7 @@ implements ISolver {
         if (up && right) {
           int candidate = 1;
           for (int i = 0; i < CONSECUTIVE; ++i) {
-            candidate *= grid[x + i][y - i];
+            candidate *= grid[y + i][x - i];
           }
           max = Math.max(max, candidate);
         }
@@ -106,9 +100,11 @@ implements ISolver {
     return max;
   }
 
+  private static final Pattern SEPARATOR = Pattern.compile(",");
+
   private int[][] loadInput() {
     try {
-      return Files.readAllLines(INPUT).stream().map(
+      return Files.readAllLines(getInputPath()).stream().map(
         s -> Stream.of(SEPARATOR.split(s)).mapToInt(Integer::parseInt).toArray()).toArray(int[][]::new);
     }
     catch (IOException ex) {

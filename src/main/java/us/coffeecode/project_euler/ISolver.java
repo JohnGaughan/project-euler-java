@@ -16,6 +16,10 @@
  */
 package us.coffeecode.project_euler;
 
+import java.nio.file.Path;
+
+import org.springframework.stereotype.Component;
+
 /**
  * <p>
  * Interface that represents an object that solves an Euler problem.
@@ -42,4 +46,21 @@ public interface ISolver {
    * @return the expected result.
    */
   long getExpectedResult();
+
+  /**
+   * Get the path to the input file, if one is present.
+   *
+   * @return path to the optional input file.
+   */
+  default Path getInputPath() {
+    final StringBuilder str = new StringBuilder(32);
+    str.append(getClass().getAnnotation(Component.class).value());
+    while (str.length() < 4) {
+      str.insert(0, '0');
+    }
+    str.insert(0, "input-problem-");
+    str.append(".txt");
+    return Path.of("src", "main", "resources", str.toString());
+  }
+
 }

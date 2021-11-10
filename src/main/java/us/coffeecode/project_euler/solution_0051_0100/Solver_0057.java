@@ -52,7 +52,7 @@ implements ISolver {
     // Term 0
     BigInteger n = BigInteger.ONE;
     BigInteger d = BigInteger.ONE;
-    int result = 0;
+    long result = 0;
     for (int i = 0; i < 1000; ++i) {
       BigInteger oldN = n;
       BigInteger oldD = d;

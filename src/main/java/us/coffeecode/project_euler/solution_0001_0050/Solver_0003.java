@@ -46,12 +46,8 @@ implements ISolver {
 
   private static final long INPUT = 600_851_475_143L;
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0003(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {

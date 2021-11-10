@@ -16,7 +16,7 @@
  */
 package us.coffeecode.project_euler.solution;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import us.coffeecode.project_euler.solution_0051_0100.*;
 

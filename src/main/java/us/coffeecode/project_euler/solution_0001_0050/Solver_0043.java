@@ -18,7 +18,6 @@ package us.coffeecode.project_euler.solution_0001_0050;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Component;
@@ -86,23 +85,15 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    long result = 0;
-    final Collection<Byte> numbers =
-      IntStream.rangeClosed(0, 9).mapToObj(i -> Byte.valueOf((byte) i)).collect(Collectors.toList());
-    for (final List<Byte> digits : Collections2.permutations(numbers)) {
-      if (hasProperties(digits)) {
-        final long number = toLong(digits);
-        result += number;
-      }
-    }
-    return result;
+    final Collection<Integer> numbers = IntStream.rangeClosed(0, 9).mapToObj(Integer::valueOf).toList();
+    return Collections2.permutations(numbers).stream().filter(this::hasProperties).mapToLong(this::toLong).sum();
   }
 
   /** Tests the number to see if it satisfies the necessary properties. */
-  private boolean hasProperties(final List<Byte> digits) {
+  private boolean hasProperties(final List<Integer> digits) {
     boolean result = digits.get(3).intValue() % 2 == 0;
     result &= toInteger(digits, 2) % 3 == 0;
-    result &= digits.get(5).intValue() == 0 || digits.get(5).intValue() == 5;
+    result &= ((digits.get(5).intValue() == 0) || (digits.get(5).intValue() == 5));
     result &= toInteger(digits, 4) % 7 == 0;
     result &= toInteger(digits, 5) % 11 == 0;
     result &= toInteger(digits, 6) % 13 == 0;
@@ -111,7 +102,7 @@ implements ISolver {
   }
 
   /** Convert the digits to a long integer. */
-  private long toLong(final List<Byte> digits) {
+  private long toLong(final List<Integer> digits) {
     long result = digits.get(9).longValue();
     result += digits.get(8).longValue() * 10L;
     result += digits.get(7).longValue() * 100L;
@@ -126,8 +117,8 @@ implements ISolver {
   }
 
   /** Convert three digits to a single integer, starting at the provided 0-based first digit number. */
-  private int toInteger(final List<Byte> digits, final int firstDigit) {
-    return digits.get(firstDigit).intValue() * 100 + digits.get(firstDigit + 1).intValue() * 10
+  private int toInteger(final List<? extends Number> digits, final int firstDigit) {
+    return (digits.get(firstDigit).intValue() * 100) + (digits.get(firstDigit + 1).intValue() * 10)
       + digits.get(firstDigit + 2).intValue();
   }
 

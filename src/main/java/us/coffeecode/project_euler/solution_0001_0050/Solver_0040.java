@@ -53,7 +53,7 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    return IntStream.of(INPUT).map(this::getDigit).reduce(1, (x, y) -> x * y);
+    return IntStream.of(INPUT).map(this::getDigit).reduce(1, (x, y) -> (x * y));
   }
 
   /** Get the nth digit of the constant. */
@@ -71,7 +71,7 @@ implements ISolver {
     // Double digits are the next 90 values and take up 180 total digits (10 - 189).
     else if (d < 190) {
       final int offset = d - 9;
-      final int number = offset / 2 + 9;
+      final int number = (offset >> 1) + 9;
       final int digit = offset % 2;
       if (digit == 0) {
         result = number % 10;
@@ -87,7 +87,7 @@ implements ISolver {
     // Triple digits are the next 900 values and take up 2,700 total digits (190 - 2,889).
     else if (d < 2_890) {
       final int offset = d - 189;
-      final int number = offset / 3 + 99;
+      final int number = (offset / 3) + 99;
       final int digit = offset % 3;
       if (digit == 0) {
         result = number % 10;
@@ -106,7 +106,7 @@ implements ISolver {
     // Quad digits are the next 9,000 values and take up 36,000 total digits (2,890 - 38,889).
     else if (d < 38_890) {
       final int offset = d - 2_889;
-      final int number = offset / 4 + 999;
+      final int number = (offset >> 2) + 999;
       final int digit = offset % 4;
       if (digit == 0) {
         result = number % 10;
@@ -128,7 +128,7 @@ implements ISolver {
     // Five digits are the next 90,000 values and take up 450,000 total digits (38,890 - 488,889).
     else if (d < 488_890) {
       final int offset = d - 38_889;
-      final int number = offset / 5 + 9_999;
+      final int number = (offset / 5) + 9_999;
       final int digit = offset % 5;
       if (digit == 0) {
         result = number % 10;
@@ -153,7 +153,7 @@ implements ISolver {
     // Six digits are the next 900,000 values and take up 7,200,000 total digits (488,890 - 7,688,889).
     else if (d < 7_688_890) {
       final int offset = d - 488_889;
-      final int number = offset / 6 + 99_999;
+      final int number = (offset / 6) + 99_999;
       final int digit = offset % 6;
       if (digit == 0) {
         result = number % 10;

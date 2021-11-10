@@ -16,6 +16,10 @@
  */
 package us.coffeecode.project_euler.solution_0051_0100;
 
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
@@ -27,10 +31,6 @@ import us.coffeecode.project_euler.common.PermutationCheck;
  * cube, and whose digits can be rearranged to have five perfect cubes.
  * </p>
  * <p>
- * TODO: generate cubes for numbers with a given number of digits and only check against those numbers. Increase the
- * digit count if none found.
- * </p>
- * <p>
  * Copyright (c) 2021 John Gaughan
  * </p>
  *
@@ -40,7 +40,8 @@ import us.coffeecode.project_euler.common.PermutationCheck;
 public class Solver_0062
 implements ISolver {
 
-  private static final int LIMIT = 10_000;
+  @Autowired
+  private PermutationCheck permutation;
 
   @Override
   public long getExpectedResult() {
@@ -49,29 +50,17 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    final long[] cubes = getCubes();
-    final PermutationCheck pc = new PermutationCheck();
+    final long[] cubes = LongStream.rangeClosed(5_000, 9_000).map(n -> (n * n * n)).toArray();
     for (int i = 0; i < cubes.length - 5; ++i) {
       // Get permutations and count how many exist in the cubes. If five, stop, we have our smallest number.
-      int permutations = 1;
-      for (int j = i + 1; j < cubes.length; ++j) {
-        if (pc.check(cubes[i], cubes[j])) {
-          ++permutations;
-        }
-      }
+      final int ii = i;
+      final int permutations =
+        1 + (int) IntStream.range(i + 1, cubes.length).filter(j -> permutation.test(cubes[ii], cubes[j])).count();
       if (permutations == 5) {
         return cubes[i];
       }
     }
     return -1;
-  }
-
-  private long[] getCubes() {
-    long[] cubes = new long[LIMIT];
-    for (int n = 1; n <= LIMIT; ++n) {
-      cubes[n - 1] = (long) n * n * n;
-    }
-    return cubes;
   }
 
 }

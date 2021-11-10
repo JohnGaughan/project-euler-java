@@ -16,6 +16,8 @@
  */
 package us.coffeecode.project_euler.solution_0001_0050;
 
+import static java.math.BigInteger.ONE;
+
 import java.math.BigInteger;
 import java.util.stream.LongStream;
 
@@ -51,10 +53,10 @@ implements ISolver {
   @Override
   public long getActualResult() {
     // Calculate the factorial.
-    BigInteger value =
-      LongStream.rangeClosed(2, 100).mapToObj(BigInteger::valueOf).reduce(BigInteger.ONE, (x, y) -> x.multiply(y));
+    final BigInteger value =
+      LongStream.rangeClosed(2, 100).mapToObj(BigInteger::valueOf).reduce(ONE, (x, y) -> x.multiply(y));
     // Add up the digits.
-    return value.toString().codePoints().mapToLong(ch -> ch - '0').sum();
+    return value.toString().codePoints().mapToLong(c -> c - '0').sum();
   }
 
 }

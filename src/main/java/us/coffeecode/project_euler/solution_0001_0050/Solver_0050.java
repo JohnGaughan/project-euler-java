@@ -44,12 +44,8 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0050
 implements ISolver {
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0050(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {
@@ -73,7 +69,8 @@ implements ISolver {
         if (sj - si > 999_983) {
           break;
         }
-        if (j - i > consecutive && 0 <= Arrays.binarySearch(primes, (int) (sj - si))) {
+        final int diff = (int) (sj - si);
+        if ((j - i > consecutive) && (0 <= Arrays.binarySearch(primes, diff))) {
           result = sj - si;
           consecutive = j - i;
         }

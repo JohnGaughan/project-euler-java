@@ -49,12 +49,12 @@ implements ISolver {
   @Override
   public long getActualResult() {
     final int upperBound = 10;
-    int result = 0;
+    long result = 0;
     int lowerBound = 0;
     int x = 1;
     while (lowerBound < upperBound) {
       lowerBound = (int) Math.ceil(Math.pow(upperBound, (x - 1.0d) / x));
-      result = result + upperBound - lowerBound;
+      result += upperBound - lowerBound;
       ++x;
     }
     return result;

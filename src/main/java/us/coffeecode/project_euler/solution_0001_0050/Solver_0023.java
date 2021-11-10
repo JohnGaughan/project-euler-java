@@ -47,14 +47,10 @@ import us.coffeecode.project_euler.common.Factorizer;
 public class Solver_0023
 implements ISolver {
 
-  private static final int LIMIT = 28123;
-
-  private final Factorizer factorizer;
+  private static final int LIMIT = 28_123;
 
   @Autowired
-  public Solver_0023(final Factorizer fact) {
-    factorizer = fact;
-  }
+  private Factorizer factorizer;
 
   @Override
   public long getExpectedResult() {
@@ -93,14 +89,14 @@ implements ISolver {
 
   private int[] getAbundantNumbers() {
     // Magic number: this is the number of ints found. Avoid resizing.
-    final List<Integer> abundant = new ArrayList<>(6961);
+    final List<Integer> abundant = new ArrayList<>(6_961);
     // If 12 is the lower bound, then 28123-12 is the upper bound (add one, exclusive).
     for (int i = 12; i < 28_112; ++i) {
-      if (i < IntStream.of(factorizer.factor(i)).sum()) {
+      if (i < IntStream.of(factorizer.apply(i)).sum()) {
         abundant.add(Integer.valueOf(i));
       }
     }
-    return abundant.stream().mapToInt(i -> i.intValue()).toArray();
+    return abundant.stream().mapToInt(Integer::intValue).toArray();
   }
 
 }

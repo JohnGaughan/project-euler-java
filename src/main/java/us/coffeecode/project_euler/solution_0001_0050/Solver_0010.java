@@ -41,12 +41,8 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
 public class Solver_0010
 implements ISolver {
 
-  private final IPrimeProvider primeProvider;
-
   @Autowired
-  public Solver_0010(final IPrimeProvider provider) {
-    primeProvider = provider;
-  }
+  private IPrimeProvider primeProvider;
 
   @Override
   public long getExpectedResult() {

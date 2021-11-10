@@ -18,7 +18,6 @@ package us.coffeecode.project_euler.solution_0051_0100;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +26,6 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
-import us.coffeecode.project_euler.common.InputPath;
 
 /**
  * <p>
@@ -51,10 +49,6 @@ import us.coffeecode.project_euler.common.InputPath;
 @Component(value = "59")
 public class Solver_0059
 implements ISolver {
-
-  private static final Pattern SEPARATOR = Pattern.compile(",");
-
-  private static final Path INPUT = InputPath.of("input-problem-0059.txt");
 
   @Override
   public long getExpectedResult() {
@@ -101,7 +95,7 @@ implements ISolver {
    */
   private byte[][] getFrequency(final byte[] cipher) {
     final List<byte[]> result = new ArrayList<>();
-    for (byte character : cipher) {
+    for (final byte character : cipher) {
       byte[] characterEntry = getCharacterEntry(result, character);
       ++characterEntry[1];
     }
@@ -115,7 +109,7 @@ implements ISolver {
   /** Given a list of frequencies, find the entry matching the given character. */
   private byte[] getCharacterEntry(final List<byte[]> frequencies, final byte character) {
     byte[] result = null;
-    for (byte[] candidate : frequencies) {
+    for (final byte[] candidate : frequencies) {
       if (candidate[0] == character) {
         result = candidate;
         break;
@@ -151,11 +145,13 @@ implements ISolver {
     return splitCipher;
   }
 
+  private static final Pattern SEPARATOR = Pattern.compile(",");
+
   /** Get the cipher from the file, where each character is represented by a byte. */
   private byte[] getInput() {
     try {
-      String[] bytes = SEPARATOR.split(Files.readString(INPUT).trim());
-      byte[] cipher = new byte[bytes.length];
+      final String[] bytes = SEPARATOR.split(Files.readString(getInputPath()).trim());
+      final byte[] cipher = new byte[bytes.length];
       for (int i = 0; i < cipher.length; ++i) {
         cipher[i] = Byte.parseByte(bytes[i]);
       }

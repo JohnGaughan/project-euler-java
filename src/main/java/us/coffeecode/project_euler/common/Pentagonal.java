@@ -16,12 +16,13 @@
  */
 package us.coffeecode.project_euler.common;
 
+import java.util.function.LongUnaryOperator;
+
 import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * Determines if the decimal representations of two numbers are permutations of each other: that is, they contain the
- * same decimal digits but potentially in a different order.
+ * Given an ordinal n, map it to P(n) which is the pentagonal number n in the sequence of all pentagonals.
  * </p>
  * <p>
  * Copyright (c) 2021 John Gaughan
@@ -30,33 +31,12 @@ import org.springframework.stereotype.Component;
  * @author John Gaughan &lt;john@coffeecode.us&gt;
  */
 @Component
-public class PermutationCheck {
+public class Pentagonal
+implements LongUnaryOperator {
 
-  public boolean test(final long t, final long u) {
-    if (t == u) {
-      return true;
-    }
-    // Count the digits in the first value, then subtract the digits in the second. If the net is zero, they are
-    // permutations of each other.
-    final int[] digits = new int[10];
-
-    long temp = t;
-    while (temp > 0) {
-      ++digits[(int) (temp % 10)];
-      temp /= 10;
-    }
-
-    temp = u;
-    while (temp > 0) {
-      --digits[(int) (temp % 10)];
-      temp /= 10;
-    }
-
-    boolean allZeros = true;
-    for (int i = 0; allZeros && i < digits.length; ++i) {
-      allZeros &= digits[i] == 0;
-    }
-    return allZeros;
+  @Override
+  public long applyAsLong(final long operand) {
+    return (operand * ((3 * operand) - 1)) >> 1;
   }
 
 }

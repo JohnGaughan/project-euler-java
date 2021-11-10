@@ -71,7 +71,7 @@ implements ISolver {
       triangle[n] = new int[n + 1];
       for (int k = 0; k < triangle[n].length; ++k) {
         // Edges are always 1.
-        if (k == 0 || k == triangle[n].length - 1) {
+        if ((k == 0) || (k == triangle[n].length - 1)) {
           triangle[n][k] = 1;
         }
         else {

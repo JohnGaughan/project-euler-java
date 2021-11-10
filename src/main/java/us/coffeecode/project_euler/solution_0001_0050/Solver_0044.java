@@ -17,10 +17,13 @@
 package us.coffeecode.project_euler.solution_0001_0050;
 
 import java.util.Arrays;
+import java.util.stream.LongStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import us.coffeecode.project_euler.ISolver;
+import us.coffeecode.project_euler.common.Pentagonal;
 
 /**
  * <p>
@@ -40,6 +43,9 @@ import us.coffeecode.project_euler.ISolver;
 public class Solver_0044
 implements ISolver {
 
+  @Autowired
+  private Pentagonal pentagonal;
+
   @Override
   public long getExpectedResult() {
     return 5_482_660;
@@ -47,7 +53,7 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    final long[] pentagonals = generatePentagonals(2_400);
+    final long[] pentagonals = LongStream.rangeClosed(1, 2_400).map(pentagonal).toArray();
     for (int j = 0; j < pentagonals.length; ++j) {
       for (int k = j + 1; k < pentagonals.length; ++k) {
         if (Arrays.binarySearch(pentagonals, pentagonals[k] + pentagonals[j]) >= 0) {
@@ -59,15 +65,6 @@ implements ISolver {
       }
     }
     return -1;
-  }
-
-  /** Generate the first <i>p</i> pentagonal numbers. */
-  private long[] generatePentagonals(final int p) {
-    final long[] numbers = new long[p];
-    for (int n = 1; n <= p; ++n) {
-      numbers[n - 1] = n * (3 * n - 1) >> 1;
-    }
-    return numbers;
   }
 
 }

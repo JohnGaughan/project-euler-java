@@ -24,7 +24,8 @@ import us.coffeecode.project_euler.ISolver;
 
 /**
  * <p>
- * <a href="https://projecteuler.net/problem=65">Problem 65</a> asks us to
+ * <a href="https://projecteuler.net/problem=65">Problem 65</a> asks us to find the sum of the digits in the numerator
+ * of the hundredth convergent of the continued fraction for <i>e</i>.
  * </p>
  * <p>
  * The problem gives us the sequence of convergents to plug into the continued fraction. Calculate this out to 100 terms
@@ -47,12 +48,11 @@ implements ISolver {
 
   @Override
   public long getActualResult() {
-    int upperBound = 100;
     BigInteger d = BigInteger.ONE;
     BigInteger n = BigInteger.TWO;
-    for (int i = 2; i <= upperBound; ++i) {
+    for (long i = 2; i <= 100; ++i) {
       BigInteger temp = d;
-      BigInteger c = BigInteger.valueOf(i % 3 == 0 ? 2 * (i / 3) : 1);
+      BigInteger c = BigInteger.valueOf((i % 3) == 0 ? ((i / 3) << 1) : 1);
       d = n;
       n = c.multiply(d).add(temp);
     }
