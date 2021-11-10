@@ -66,7 +66,7 @@ import us.coffeecode.project_euler.ISolver;
  * The six numbers are therefore: 4130952867, 1430952867, 1406357289, 1460357289, 4160357289, and 4106357289. Normally I
  * do not like solving these puzzles by hand, but the time on this one was simply too great. While the solution uses
  * Guava to enumerate the permutations, a better idea would be to calculate them in this program and shortcut the logic
- * once a divisibility rule is violated. TODO: do this as the programmatic solution.
+ * once a divisibility rule is violated.
  * </p>
  * <p>
  * Copyright (c) 2021 John Gaughan

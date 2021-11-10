@@ -32,9 +32,6 @@ import us.coffeecode.project_euler.common.primes.IPrimeProvider;
  * two them in any order and the result is prime, and return the sum of those primes.
  * </p>
  * <p>
- * TODO: revisit and make more efficient. Also, the code is ugly and those highly nested loops are bad.
- * </p>
- * <p>
  * Copyright (c) 2021 John Gaughan
  * </p>
  *
