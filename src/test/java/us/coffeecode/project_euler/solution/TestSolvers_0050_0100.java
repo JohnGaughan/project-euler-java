@@ -118,4 +118,9 @@ extends AbstractTestSolvers {
     test(Solver_0067.class);
   }
 
+  @Test
+  public void testSolver0069() throws Exception {
+    test(Solver_0069.class);
+  }
+
 }
